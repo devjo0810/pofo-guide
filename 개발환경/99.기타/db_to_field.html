@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>converter</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        html, body {
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+        textarea {
+            resize: none;
+        }
+        .flex {
+            display: flex;
+        }
+        .flex.column {
+            flex-direction: column;
+        }
+        .w_h {
+            width: 50%;
+        }
+        .h500 {
+            height: 500px;
+        }
+        .mh5 {
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        .mh10 {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .c_mr5>*{
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="mh10">DB To Object Field</h1>
+
+    <div class="flex mh5 c_mr5">
+        <div class="flex column w_h">
+            <h3>Input Type</h3>
+            <span>
+                <input type="radio" id="input_snake_rdo" name="input_rdo" value="snakecase" checked>
+                <label for="input_snake_rdo">Snake Case(CMNS_CD)</label>
+            </span>
+            <span>
+                <input type="radio" id="input_camel_rdo" name="input_rdo" value="camelcase">
+                <label for="input_camel_rdo">Camel Case(cmnsCd)</label>
+            </span>
+        </div>
+        <div class="flex column w_h">
+            <h3>Output Type</h3>
+            <span>
+                <input type="radio" id="output_snake_rdo" name="output_rdo" value="snakecase">
+                <label for="output_snake_rdo">Snake Case(cmns_cd)</label>
+            </span>
+            <span>
+                <input type="radio" id="output_camel_rdo" name="output_rdo" value="camelcase" checked>
+                <label for="output_camel_rdo">Camel Case(cmnsCd)</label>
+            </span>
+        </div>
+    </div>
+
+    <div class="flex">
+        <textarea id="input_ta" class="w_h h500">CMNS_CD</textarea>
+        <textarea id="output_ta" class="w_h h500" readonly></textarea>
+    </div>
+    <script>
+        var prefix = "private String ";
+        var suffix = ";\n";
+        document.addEventListener("DOMContentLoaded", function(){
+            dbToFieldConvert();
+            document.getElementById("input_ta").addEventListener("input", function(e) {
+                dbToFieldConvert();
+            });
+            document.getElementById("input_snake_rdo").addEventListener("change", function(e) {
+                dbToFieldConvert();
+            });
+            document.getElementById("input_camel_rdo").addEventListener("change", function(e) {
+                dbToFieldConvert();
+            });
+            document.getElementById("output_snake_rdo").addEventListener("change", function(e) {
+                dbToFieldConvert();
+            });
+            document.getElementById("output_camel_rdo").addEventListener("change", function(e) {
+                dbToFieldConvert();
+            });
+
+            function dbToFieldConvert () {
+                var inputType = document.querySelector('input[name="input_rdo"]:checked').value;
+                var outputType = document.querySelector('input[name="output_rdo"]:checked').value;
+                var inputTa = document.getElementById("input_ta");
+                var outputTa = document.getElementById("output_ta");
+                var inputValue = inputTa.value;
+                var lines = inputValue.split('\n');
+                var outputLines = "";
+                for(var i=0; i<lines.length; i++) {
+                    var line = lines[i];
+                    if(line === "") continue;
+                    var words = splitLine(line, inputType);
+                    var outputLine = replaceWords(words, outputType);
+                    outputLines += prefix + outputLine + suffix
+                }
+                outputTa.value = outputLines;
+            }
+
+            function splitLine(line, inputType) {
+                switch(inputType) {
+                    case 'camelcase':
+                        var returnAry = [];
+                        var word = "";
+                        for (var i=0; i<line.length; i++) {
+                            if(line[i] === line[i].toUpperCase()) {
+                                returnAry.push(word);
+                                word = "";
+                            }
+                            word += line[i];
+                        }
+                        returnAry.push(word);
+                        return returnAry;
+                    case 'snakecase':
+                    default:
+                        return line.split("_");
+                }
+            }
+
+            function replaceWords(words, outputType) {
+                var returnWord = "";
+                for(var j=0; j<words.length; j++) {
+                    var word = words[j].toLowerCase();
+                    switch(outputType) {
+                        case 'snakecase':
+                            if(j !== words.length - 1) word += '_';
+                            break;
+                        case 'camelcase':
+                        default:
+                            if(j !== 0) word = word.charAt(0).toUpperCase() + word.slice(1);
+                            break;
+                    }
+                    returnWord += word;
+                }
+                return returnWord;
+            }
+        });
+    </script>
+</body>
+</html>
