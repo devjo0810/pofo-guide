@@ -11,7 +11,7 @@ location /api/example {
     proxy_pass  http://localhost:80??;
 }
 ```
-
+å
 ### nginx.exe로 실행
 -----
 ### nginx 명령어
@@ -22,4 +22,16 @@ nginx.exe 파일이 있는 경로에서
 > nginx -s reload ( 재기동 )
 
 종료 명령어로 종료가 안될시 작업관리자로 강제 종료
+```
+
+## mac에서 세팅 방법
+
+### 해당 파일 변경
+```
+/opt/homebrew/etc/nginx/nginx.conf
+```
+
+### nginx 재시작
+```
+brew services restart nginx
 ```
