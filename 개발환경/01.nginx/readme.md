@@ -1,5 +1,14 @@
 # Nginx
 
+## Local Routing 구조
+```
+listen 8090
+server_name freepofo-local -> userui port 8071
+server_name admin.freepofo-local -> adminui port 8072
+API_server /api/appmgmt -> appmgmt back-end 8081
+```
+
+
 ### nginx-1.18.0.zip 압축해제
 
 ### conf폴더안의 nginx.conf파일 변경
