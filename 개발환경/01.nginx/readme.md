@@ -10,12 +10,12 @@ API_server /api/appmgmt -> appmgmt back-end 8081
 
 ## Local hosts 세팅
 ```
+# userui port is 8071
 127.0.0.1 freepofo-local
 # adminui port is 8072
 127.0.0.1 admin.freepofo-local
 # End Local Dev Domain
 ```
-
 
 ### nginx-1.18.0.zip 압축해제
 
