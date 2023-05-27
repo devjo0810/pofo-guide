@@ -1,5 +1,8 @@
 # POFO 테이블 정의서
 
+### ERD link
+https://www.erdcloud.com/d/crz6QDfjFSSDtjz9u
+
 ## User 테이블
 - user_id (PK, BIGINT): 유저 ID
 - username (VARCHAR(255)): 유저명
