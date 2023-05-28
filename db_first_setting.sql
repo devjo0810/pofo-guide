@@ -1,5 +1,5 @@
 -- DB 생성
-CREATE DATABASE appmgmt
+CREATE DATABASE pofo
 CHARACTER SET = 'utf8'
 COLLATE = 'utf8_general_ci';
 
@@ -7,7 +7,7 @@ COLLATE = 'utf8_general_ci';
 CREATE USER 'pofo'@'%' IDENTIFIED BY 'pofo1234';
 
 -- 권한 추가
-GRANT ALL PRIVILEGES ON appmgmt.* TO 'pofo1234'@'%';
+GRANT ALL PRIVILEGES ON pofo.* TO 'pofo1234'@'%';
 
 -- 데이터베이스 변경
-USE DATABASE appmgmt;
+USE DATABASE pofo;
